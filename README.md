@@ -1,2 +1,3 @@
-A code illustration of Reputation-based distributed formation control
+A code illustration of weight-based distributed formation control
+
 Simu_normal.m is the main file

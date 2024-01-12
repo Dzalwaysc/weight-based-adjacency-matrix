@@ -33,6 +33,7 @@ init_vartheta(4,:) = [0.1, 0, 0]; init_vartheta(5,:) = [0.25, 0, 0];
 
 for i=1:N
     tau{i}(Loop,:) = [0, 0, 0];
+    tau_for_uncertainties{i}(Loop, :) = [0, 0, 0];
     delta_eta{i}(Loop,:) = [0, 0, 0]; delta_Delta_eta{i}(Loop,:) = [0, 0, 0]; d_delta_Delta_eta{i}(Loop,:) = [0, 0, 0]; 
     delta_omega{i}(Loop,:) = [0, 0, 0]; delta_Delta_omega{i}(Loop,:) = [0, 0, 0];
     hat_Delta_STC{i}(Loop,:) = [0, 0, 0];
@@ -86,13 +87,13 @@ for i=1:AT/dt
     RR = reshape(obtain_R([xx, yy, fai]),3, 3);
     eta{1}(Loop+1,:) = [xx, yy, fai]; vartheta{1}(Loop+1,:) = [xxd, yyd, faid]*RR'; deta{1}(Loop+1,:) = [xxd, yyd, faid]; 
 
-    uncertainty{1}(Loop+1,:) = [0, 0, 0]; tau{1}(Loop+1,:) = [0, 0, 0];
+    uncertainty{1}(Loop+1,:) = [0, 0, 0]; tau{1}(Loop+1,:) = [0, 0, 0]; tau_for_uncertainties{1}(Loop+1, :) = [0, 0, 0];
     [Zeta{1}(Loop+1,:), Sigma{1}(Loop+1,:)] = weight_node(Zeta, Sigma, Neighbor, N, Delta_STC, Delta_VTV, 1, dt, Loop, Tk);
     delta_eta{1}(Loop+1,:) = [0, 0, 0]; delta_Delta_eta{1}(Loop+1,:) = [0, 0, 0]; d_delta_Delta_eta{1}(Loop+1,:) = [0, 0, 0];  delta_omega{1}(Loop+1,:) = [0, 0, 0]; delta_Delta_omega{1}(Loop+1,:) = [0, 0, 0];
 
     %% follower
     for index = 2:5
-        [tau{index}(Loop+1,:), hat_Delta_STC{index}(Loop+1,:)] ...
+        [tau{index}(Loop+1,:), hat_Delta_STC{index}(Loop+1,:), tau_for_uncertainties{index}(Loop+1, :)]] ...
             = control(Zeta, Neighbor, Configuration, eta_, deta_, eta__, deta__, delta_Delta_eta, d_delta_Delta_eta, delta_Delta_omega, index, Loop, T);
         
         [Zeta{index}(Loop+1,:), Sigma{index}(Loop+1,:)] ...
@@ -124,7 +125,7 @@ for i=1:AT/dt
             = state_underHCFs(eta, deta, Delta_STC, Delta_VTV, index, Loop);
 
         [Delta_eta{index}(Loop+1,:), Delta_omega{index}(Loop+1,:)] ...
-            = uncertainties(d_Delta_STC, Delta_STC, eta_, eta, uncertainty, tau, index, Loop);
+            = uncertainties(d_Delta_STC, Delta_STC, eta_, eta, uncertainty, tau_for_uncertainties, index, Loop);
         err{index}(Loop+1,:) = constraint_ang( eta{index}(Loop+1,:) - eta{1}(Loop+1,:) - Configuration{index} );
         derr{index} = deta{index} - deta{1};
     end

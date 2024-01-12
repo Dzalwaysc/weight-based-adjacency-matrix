@@ -277,7 +277,7 @@ set(gca, 'FontSize', 16)
 %         estimation_err3{i}(j) = norm(delta_omega{i}(j,:) - deta_{i}(j,:));
 %         estimation_err4{i}(j) = norm(delta_Delta_omega{i}(j,:) - Delta_omega{i}(j,:));
 %         
-%         estimation_err_sum{i}(j) = estimation_err1{i}(j)+estimation_err2{i}(j)+estimation_err3{i}(j);
+%         estimation_err_sum{i}(j) = estimation_err1{i}(j)+estimation_err2{i}(j)+estimation_err3{i}(j)+estimation_err4{i}(j);
 %     end
 % end
 % TT = (estimation_err_sum{2} + estimation_err_sum{3} + estimation_err_sum{4} + estimation_err_sum{5})/4;

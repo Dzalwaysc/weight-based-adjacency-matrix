@@ -46,4 +46,5 @@ vartheta = vartheta+dvartheta*dt;
 S = [0 -r  0
      r  0  0
      0  0  0];
-uncertainty = R*S*vartheta + R*inv(M)*(-C*vartheta-D*vartheta+taod);
+MathcalT = R * inv(M)*tau;
+uncertainty = R*S*vartheta + R*inv(M)*(-C*vartheta-D*vartheta) + MathcalT;

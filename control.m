@@ -1,4 +1,4 @@
-function [tau, hat_Delta_STC] = control(Zeta, Neighbor, Configuration, eta_, deta_, eta__, deta__, delta_Delta_eta, d_delta_Delta_eta, delta_Delta_omega, index, Loop, T)
+function [tau, hat_Delta_STC, tau_for_uncertainties] = control(Zeta, Neighbor, Configuration, eta_, deta_, eta__, deta__, delta_Delta_eta, d_delta_Delta_eta, delta_Delta_omega, index, Loop, T)
 
 Ni = Neighbor{index};
 zeta = Zeta{index}(Loop,:);
@@ -33,6 +33,9 @@ M = 0.5*reshape( obtain_M(), 3, 3 );
 % tau = -M*R'*(delta_Delta_omega{index}(end,:)' + varsigma*z2' + varsigma*z1' + delta_Delta_eta{index}(Loop,:)' + deta_{index}(Loop,:)');
 tau = -M*R'*(varsigma*z2' + varsigma*z1'+ delta_Delta_omega{index}(Loop,:)' + deta_{index}(Loop,:)' + delta_Delta_eta{index}(Loop,:)');
 % tau = -M*R'*(dR*V_{index}(end,:)' + varsigma*z2' + varsigma*gamma*z1');
+
+tau_for_uncertainties = - 0.05 * R * inv(M) * tau;
+
 tau = tau + 12*sin(pi/2*T/10)*ones(3,1);
 
 [tau(1), ~] = constraint_input(tau(1), 10);

@@ -1,22 +1,41 @@
-## Main
+## 1. Main
 
 Simulation_Main.m
 
-## Control Solve
+## 2. Control Solve
 
-### Weight-based adjacency matrix
-Weight_Matrix.m
+### Weight-based Adjacency Matrix
+- Weight_Matrix.m
 
-### Hierarchical observer
+### Hierarchical Observer
 - Estimation.m
-- sig.m
 
-### Dead zone-based Model
+### Dead Zone-based Model
 - DOZM.m
 - Pra.m
 - density.m
 - dead_zone.m
 - ck.m
 
-### Control.m
-It is used to solve for the control signal 
+### Anti-HCCDAs Weight-based Distributed Formation Control
+- Control.m
+
+### Plant Iteration
+- plant.m
+- obtain_M.m
+- obtain_J.m
+- obtain_dR.m
+- obtain_dEta.m
+
+### Plant Setting
+- Hard_Saturation.m
+- Dwell_Time.m
+
+### Plot
+- res_plot_4_connected.m
+- res_plot_2_connected.m
+- Lumped_Uncertainties.m
+
+### Other Tools
+- sig.m: sig($\cdot$)
+- posPi_2_nagPi.m
